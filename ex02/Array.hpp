@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 23:14:17 by auplisas          #+#    #+#             */
-/*   Updated: 2025/04/14 03:13:26 by macbook          ###   ########.fr       */
+/*   Updated: 2025/04/14 13:18:59 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,25 @@
 
 #include <iostream>
 
-template <typename ARR> 
+template <typename T> 
 class Array
 {
   private:
-	ARR *_arr;
+	T *_array;
 	unsigned int _size;
 
   public:
 	// Constructors
 	Array();
 	Array(unsigned int n);
-	Array(const Array<ARR> &copy);
+	Array(const Array<T> &copy);
 	~Array();
-	Array<ARR> &operator=(const Arrayy<ARR> &copy);
-	ARR &operator[](unsigned int n);
+	Array<T> &operator=(const Array<T> &copy);
+
+	T &operator[](unsigned int n);
 	unsigned int size() const;
 	// Exception classes
-	class InaccessibleException : public std::exception
+	class OutOfBounds : public std::exception
 	{
 		public:
 		const char *what() const throw();
