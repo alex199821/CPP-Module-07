@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:38:02 by macbook           #+#    #+#             */
-/*   Updated: 2025/04/14 13:22:24 by macbook          ###   ########.fr       */
+/*   Updated: 2025/04/14 14:41:23 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ Array<T>::Array(unsigned int n) : _array(new T[n]),
 template <typename T> 
 Array<T>::~Array(void)
 {
-	delete	_array;
+	delete[] _array;
 
 	std::cout << "The Array is destroyed" << std::endl;
 };
@@ -39,9 +39,9 @@ Array<T>::~Array(void)
 template <typename T> 
 Array<T>::Array(const Array &copy)
 {
-	_len = copy.size();
-	_array = new T[_len];
-	for (unsigned int i = 0; i < _len; i++)
+	_size = copy.size();
+	_array = new T[_size];
+	for (unsigned int i = 0; i < _size; i++)
 		_array[i] = copy.getArray()[i];
 	std::cout << "The Array is copied" << std::endl;
 }
@@ -49,10 +49,18 @@ Array<T>::Array(const Array &copy)
 template <typename T> 
 Array<T> &Array<T>::operator=(const Array<T> &copy)
 {
-	if (this != *copy)
+	if (this != &copy)
 	{
-		for (int i = 0; i < _len; i++)
-			_array[i] = copy.getArray()[i];
+		// Clean up existing memory
+		delete[] _array;
+
+		// Allocate new memory and copy size
+		_size = copy._size;
+		_array = new T[_size];
+
+		// Copy elements
+		for (unsigned int i = 0; i < _size; i++)
+			_array[i] = copy._array[i];
 	}
 	std::cout << "The Array is copied by assigning" << std::endl;
 	return (*this);
@@ -60,11 +68,11 @@ Array<T> &Array<T>::operator=(const Array<T> &copy)
 
 // [] Overload Operator
 template <typename T> 
-T &Array<T>::operator[](unsigned int index)
+T &Array<T>::operator[](unsigned int n)
 {
-	if (index < 0 || index > (int)size())
-		throw(OutOfBounds()) 
-    return (_arr[index]);
+	if (n < 0 || n > size())
+		throw(OutOfBounds());
+    return (_array[n]);
 }
 
 // Error exception
@@ -78,4 +86,21 @@ template <typename T>
 unsigned int Array<T>::size() const
 {
 	return _size;
+}
+
+template <typename T>
+T *Array<T>::getArray(void) const
+{
+	return (_array);
+}
+
+template <typename T>
+void printArray(Array<T>& array)
+{
+	std::cout << "Array contents:" << std::endl;
+	for (unsigned int i = 0; i < array.size(); i++)
+	{
+		std::cout << "[" << array[i] << "]";
+	}
+    std::cout << std::endl;
 }

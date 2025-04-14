@@ -6,13 +6,14 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 23:14:17 by auplisas          #+#    #+#             */
-/*   Updated: 2025/04/14 13:18:59 by macbook          ###   ########.fr       */
+/*   Updated: 2025/04/14 14:39:40 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include <iostream>
+#include <cstdlib> 
 
 template <typename T> 
 class Array
@@ -31,6 +32,8 @@ class Array
 
 	T &operator[](unsigned int n);
 	unsigned int size() const;
+	T *getArray(void) const;
+	void printArray(Array<T>& array) const;
 	// Exception classes
 	class OutOfBounds : public std::exception
 	{
@@ -38,3 +41,5 @@ class Array
 		const char *what() const throw();
 	};
 };
+
+#include "Array.tpp"
